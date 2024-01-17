@@ -4,7 +4,7 @@ using {managed} from '@sap/cds/common';
 
 entity Class : managed {
   key ID          : UUID @(Core.Computed: true);
-      title       : String(50);
+      title       : String(5);
 
       assignments : Association to many Assignment
                       on assignments.Class = $self;
@@ -12,7 +12,7 @@ entity Class : managed {
 
 entity Subject : managed {
   key ID          : UUID @(Core.Computed: true);
-      title       : String(50);
+      title       : String(20);
 
       assignments : Association to many Assignment
                       on assignments.Subject = $self;

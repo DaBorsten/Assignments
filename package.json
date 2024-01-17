@@ -15,16 +15,17 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-assignments": "cds watch --open assignments/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-assignment": "cds watch --open assignment/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-assignments": "cds watch --open assignments/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "workspaces": [
     "app/*"
   ],
   "sapux": [
-    "app/assignments",
-    "app/assignment",
-    "app/assignment",
     "app/assignments"
-  ]
+  ],
+  "cds": {
+    "fiori": {
+      "bypass_draft": true
+    }
+  }
 }
