@@ -1,0 +1,28 @@
+namespace sap.ui.school;
+
+using {managed} from '@sap/cds/common';
+
+entity Class : managed {
+  key ID          : UUID @(Core.Computed: true);
+      title       : String(50);
+
+      assignments : Association to many Assignment
+                      on assignments.Class = $self;
+}
+
+entity Subject : managed {
+  key ID          : UUID @(Core.Computed: true);
+      title       : String(50);
+
+      assignments : Association to many Assignment
+                      on assignments.Subject = $self;
+}
+
+entity Assignment : managed {
+  key ID        : UUID @(Core.Computed: true);
+      Topic     : String(100);
+      Beginning : DateTime;
+      Ending    : DateTime;
+      Class     : Association to Class;
+      Subject   : Association to Subject;
+}

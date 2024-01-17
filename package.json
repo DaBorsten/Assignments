@@ -1,0 +1,30 @@
+{
+  "name": "Assignments",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "cds-plugin-ui5": "^0.6.13"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-assignments": "cds watch --open assignments/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-assignment": "cds watch --open assignment/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/assignments",
+    "app/assignment",
+    "app/assignment",
+    "app/assignments"
+  ]
+}
