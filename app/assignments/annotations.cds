@@ -143,3 +143,18 @@ annotate service.Assignment with @(UI.SelectionPresentationVariant #table1: {
         SelectOptions: [],
     },
 });
+annotate service.Class with {
+    title @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Class',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : title,
+                    ValueListProperty : 'title',
+                },
+            ],
+            Label : 'Class',
+        },
+        Common.ValueListWithFixedValues : true
+)};
