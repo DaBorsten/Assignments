@@ -92,7 +92,7 @@ annotate service.Assignment with @(
                 $Type: 'UI.DataField',
                 Label: 'Ending',
                 Value: Ending,
-            },
+            }
         ],
     },
     UI.Facets                     : [{
@@ -102,55 +102,44 @@ annotate service.Assignment with @(
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );
-annotate service.Assignment with @(
-    UI.SelectionFields : []
-);
+
+annotate service.Assignment with @(UI.SelectionFields: []);
+
 annotate service.Assignment with {
-    Beginning @Common.Label : 'Beginning'
+    Beginning @Common.Label: 'Beginning'
 };
-annotate service.Assignment with @(
-    UI.SelectionPresentationVariant #table : {
-        $Type : 'UI.SelectionPresentationVariantType',
-        PresentationVariant : {
-            $Type : 'UI.PresentationVariantType',
-            Visualizations : [
-                '@UI.LineItem',
-            ],
-            SortOrder : [
-                {
-                    $Type : 'Common.SortOrderType',
-                    Property : Beginning,
-                    Descending : false,
-                },
-            ],
-        },
-        SelectionVariant : {
-            $Type : 'UI.SelectionVariantType',
-            SelectOptions : [
-            ],
-        },
-    }
-);
-annotate service.Assignment with @(
-    UI.SelectionPresentationVariant #table1 : {
-        $Type : 'UI.SelectionPresentationVariantType',
-        PresentationVariant : {
-            $Type : 'UI.PresentationVariantType',
-            Visualizations : [
-                '@UI.LineItem',
-            ],
-            SortOrder : [
-                {
-                    $Type : 'Common.SortOrderType',
-                    Property : Beginning,
-                    Descending : false,
-                },
-            ],
-        },
-        SelectionVariant : {
-            $Type : 'UI.SelectionVariantType',
-            SelectOptions : [
-            ],
-        },
-    }
-);
+
+annotate service.Assignment with @(UI.SelectionPresentationVariant #table: {
+    $Type              : 'UI.SelectionPresentationVariantType',
+    PresentationVariant: {
+        $Type         : 'UI.PresentationVariantType',
+        Visualizations: ['@UI.LineItem', ],
+        SortOrder     : [{
+            $Type     : 'Common.SortOrderType',
+            Property  : Beginning,
+            Descending: false,
+        }, ],
+    },
+    SelectionVariant   : {
+        $Type        : 'UI.SelectionVariantType',
+        SelectOptions: [],
+    },
+});
+
+annotate service.Assignment with @(UI.SelectionPresentationVariant #table1: {
+    $Type              : 'UI.SelectionPresentationVariantType',
+    PresentationVariant: {
+        $Type         : 'UI.PresentationVariantType',
+        Visualizations: ['@UI.LineItem', ],
+        SortOrder     : [{
+            $Type     : 'Common.SortOrderType',
+            Property  : Beginning,
+            Descending: false,
+        }, ],
+        GroupBy       : [Class.title, ],
+    },
+    SelectionVariant   : {
+        $Type        : 'UI.SelectionVariantType',
+        SelectOptions: [],
+    },
+});

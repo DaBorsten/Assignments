@@ -6,8 +6,11 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^7",
-    "express": "^4"
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.19",
+    "@sap/cds": "^7.5.3",
+    "@ui5/cli": "^3.9.0",
+    "express": "^4",
+    "ui5-tooling-transpile": "^3.3.3"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",

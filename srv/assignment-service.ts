@@ -1,4 +1,4 @@
-
+/* 
 const cds = require('@sap/cds');
 
 module.exports = cds.service.impl(async function ()
@@ -17,4 +17,4 @@ module.exports = cds.service.impl(async function ()
             }
         });
     });
-});
+}); */
