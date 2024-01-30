@@ -69,9 +69,9 @@ annotate service.Assignment with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             {
-                $Type: 'UI.DataField',
-                Value: Class.title,
-                Label: 'Class',
+                $Type : 'UI.DataField',
+                Value : Class.title,
+                Label : 'Class',
             },
             {
                 $Type: 'UI.DataField',
@@ -158,3 +158,30 @@ annotate service.Class with {
         },
         Common.ValueListWithFixedValues : true
 )};
+annotate service.Subject with {
+    title @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Subject',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : title,
+                    ValueListProperty : 'title',
+                },
+            ],
+            Label : 'Subject',
+        },
+        Common.ValueListWithFixedValues : true
+)};
+annotate service.Assignment with @(
+    UI.Identification : [
+        {
+            $Type : 'UI.DataField',
+            Value : Class_ID,
+            Label : 'Class_ID',
+        },{
+            $Type : 'UI.DataField',
+            Value : Subject.ID,
+            Label : 'ID',
+        },]
+);

@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
-    "cds-plugin-ui5": "^0.6.13"
+    "cds-plugin-ui5": "^0.6.13",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "start": "cds-serve",
