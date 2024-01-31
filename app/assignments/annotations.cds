@@ -285,3 +285,9 @@ annotate service.Assignment with {
 annotate service.Assignment with {
     Ending @Common.FieldControl: #Mandatory
 };
+annotate service.Assignment with {
+    Class @Common.FieldControl : #Mandatory
+};
+annotate service.Assignment with {
+    Subject @Common.FieldControl : #Mandatory
+};
