@@ -17,7 +17,7 @@ entity Subject : managed {
 }
 
 entity Assignment : managed {
-    key ID        : UUID   @(Core.Computed: true);
+    key ID        : UUID @(Core.Computed: true);
         Class     : Association to one Class;
         Subject   : Association to one Subject;
         Topic     : String(100);
