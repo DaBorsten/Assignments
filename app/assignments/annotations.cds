@@ -156,9 +156,7 @@ annotate service.Assignment with @(UI.SelectionPresentationVariant #table1: {
                 Descending: false,
             },
         ],
-        GroupBy : [
-            Class.title,
-        ],
+        GroupBy       : [Class.title, ],
     },
     SelectionVariant   : {
         $Type        : 'UI.SelectionVariantType',
@@ -255,10 +253,35 @@ annotate service.Subject with {
         ![@UI.TextArrangement]: #TextOnly,
     }
 };
+
 annotate service.Class with {
-    title @Common.Label : 'Class'
+    title @Common.Label: 'Class'
 };
 
 annotate service.Assignment with {
-    Class @Common.Label : 'Class'
+    Class @Common.Label: 'Class'
+};
+
+annotate service.Class with {
+    title @Common.FieldControl: #Mandatory
+};
+
+annotate service.Subject with {
+    title @Common.FieldControl: #Mandatory
+};
+
+annotate service.Assignment with {
+    Topic @Common.FieldControl: #Mandatory
+};
+
+annotate service.Assignment with {
+    Day @Common.FieldControl: #Mandatory
+};
+
+annotate service.Assignment with {
+    Beginning @Common.FieldControl: #Mandatory
+};
+
+annotate service.Assignment with {
+    Ending @Common.FieldControl: #Mandatory
 };

@@ -21,8 +21,7 @@ entity Assignment : managed {
         Class     : Association to one Class;
         Subject   : Association to one Subject;
         Topic     : String(100);
-        Day      : Date;
+        Day       : Date;
         Beginning : Time;
         Ending    : Time;
-        dayOfWeek : String @readonly;
 }

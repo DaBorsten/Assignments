@@ -7,4 +7,5 @@ service AssignmentService {
   entity Subject    as projection on my.Subject;
   entity Assignment as projection on my.Assignment;
   annotate Assignment with @odata.draft.enabled;
+
 }
