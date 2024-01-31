@@ -36,7 +36,18 @@ module.exports = cds.service.impl(async function (this: any)
         if ((Day == today) && (Date.parse(Day + "T" + Beginning) < Date.parse(new Date().toISOString())))
         {
             let now = new Date();
-            req.error(400, `Begin time ${Beginning} must be ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} or after.`, 'in/Beginning');
+
+            console.log(`Aktuell: ${Date.parse(new Date().toISOString())}`);
+
+            console.log(`12:15: ${Date.parse(Day + "T12:15:00")}`);
+
+            if (Date.parse(new Date().toISOString()) >= Date.parse(Day + "T12:15:00"))
+            {
+                req.error(400, `No assignments for today.`, 'in/Day');
+            } else
+            {
+                req.error(400, `Begin time ${Beginning} must be ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} or after.`, 'in/Beginning');
+            }
         }
 
 
@@ -55,19 +66,21 @@ module.exports = cds.service.impl(async function (this: any)
 
 
         //**********************************************
-        //             Already Assignments?
+        //       Already Assignments on this day?
         //**********************************************
 
         // TODO It is counting but this.before('SAVE') is not waiting. asyc in front of (req: ...) does not work
 
         // Check if already assignment today
-        /* const baseUrl = 'http://localhost:4004/odata/v4/service/Assignment';
+        const baseUrl = 'http://localhost:4004/odata/v4/service/Assignment';
         const entitySet = 'Assignment';
         const classIdFilter = `Class_ID eq ${Class_ID}`;
-        const dayFilter = `Day eq ${Day}`; */
+        const dayFilter = `Day eq ${Day}`;
 
         // Baue die OData-Abfrage-URL
-        // const odataQueryUrl = `${baseUrl}/${entitySet}?$filter=${classIdFilter} and ${dayFilter}&$count=true`;
+        const odataQueryUrl = `${baseUrl}/${entitySet}?$filter=${classIdFilter} and ${dayFilter}&$count=true`;
+
+        let numberOfA = 0;
 
         // Sende die Anfrage mit Fetch
 
