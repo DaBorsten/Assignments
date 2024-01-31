@@ -68,7 +68,6 @@ module.exports = cds.service.impl(function () {
             const dayFilter = `Day eq ${Day}`;
             // Baue die OData-Abfrage-URL
             const odataQueryUrl = `${baseUrl}/${entitySet}?$filter=${classIdFilter} and ${dayFilter}&$count=true`;
-            let numberOfA = 0;
             // Sende die Anfrage mit Fetch
             /* fetch(odataQueryUrl)
                 .then(response =>
