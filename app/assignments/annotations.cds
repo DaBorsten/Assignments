@@ -18,6 +18,11 @@ annotate service.Assignment with @(UI.LineItem: [
     },
     {
         $Type: 'UI.DataField',
+        Label: 'Day',
+        Value: Day,
+    },
+    {
+        $Type: 'UI.DataField',
         Label: 'Beginning',
         Value: Beginning,
     },
@@ -30,9 +35,9 @@ annotate service.Assignment with @(UI.LineItem: [
 
 annotate service.Assignment with {
     Class @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        CollectionPath: 'Class',
-        Parameters    : [
+        $Type                       : 'Common.ValueListType',
+        CollectionPath              : 'Class',
+        Parameters                  : [
             {
                 $Type            : 'Common.ValueListParameterInOut',
                 LocalDataProperty: Class_ID,
@@ -43,6 +48,8 @@ annotate service.Assignment with {
                 ValueListProperty: 'title',
             },
         ],
+        Label                       : 'Class',
+        PresentationVariantQualifier: 'vh_Assignment_Class',
     }
 };
 
@@ -61,6 +68,7 @@ annotate service.Assignment with {
                 ValueListProperty: 'title',
             },
         ],
+        Label         : 'Subject',
     }
 };
 
@@ -69,19 +77,24 @@ annotate service.Assignment with @(
         $Type: 'UI.FieldGroupType',
         Data : [
             {
-                $Type : 'UI.DataField',
-                Value : Class.title,
-                Label : 'Class',
+                $Type: 'UI.DataField',
+                Value: Class_ID,
+                Label: 'Class',
             },
             {
                 $Type: 'UI.DataField',
-                Value: Subject.title,
+                Value: Subject_ID,
                 Label: 'Subject',
             },
             {
                 $Type: 'UI.DataField',
                 Label: 'Topic',
                 Value: Topic,
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Day,
+                Label: 'Day',
             },
             {
                 $Type: 'UI.DataField',
@@ -131,57 +144,121 @@ annotate service.Assignment with @(UI.SelectionPresentationVariant #table1: {
     PresentationVariant: {
         $Type         : 'UI.PresentationVariantType',
         Visualizations: ['@UI.LineItem', ],
-        SortOrder     : [{
-            $Type     : 'Common.SortOrderType',
-            Property  : Beginning,
-            Descending: false,
-        }, ],
-        GroupBy       : [Class.title, ],
+        SortOrder     : [
+            {
+                $Type     : 'Common.SortOrderType',
+                Property  : Day,
+                Descending: false,
+            },
+            {
+                $Type     : 'Common.SortOrderType',
+                Property  : Beginning,
+                Descending: false,
+            },
+        ],
+        GroupBy : [
+            Class.title,
+        ],
     },
     SelectionVariant   : {
         $Type        : 'UI.SelectionVariantType',
         SelectOptions: [],
     },
 });
+
 annotate service.Class with {
-    title @(Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Class',
-            Parameters : [
-                {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : title,
-                    ValueListProperty : 'title',
-                },
-            ],
-            Label : 'Class',
+    title @(
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Class',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: title,
+                ValueListProperty: 'title',
+            }, ],
+            Label         : 'Class',
         },
-        Common.ValueListWithFixedValues : true
-)};
+        Common.ValueListWithFixedValues: true
+    )
+};
+
 annotate service.Subject with {
-    title @(Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Subject',
-            Parameters : [
-                {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : title,
-                    ValueListProperty : 'title',
-                },
-            ],
-            Label : 'Subject',
+    title @(
+        Common.ValueList               : {
+            $Type         : 'Common.ValueListType',
+            CollectionPath: 'Subject',
+            Parameters    : [{
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: title,
+                ValueListProperty: 'title',
+            }, ],
+            Label         : 'Subject',
         },
-        Common.ValueListWithFixedValues : true
-)};
-annotate service.Assignment with @(
-    UI.Identification : [
-        {
-            $Type : 'UI.DataField',
-            Value : Class_ID,
-            Label : 'Class_ID',
-        },{
-            $Type : 'UI.DataField',
-            Value : Subject.ID,
-            Label : 'ID',
-        },]
-);
+        Common.ValueListWithFixedValues: true
+    )
+};
+
+annotate service.Assignment with @(UI.Identification: [
+    {
+        $Type: 'UI.DataField',
+        Value: Class_ID,
+        Label: 'Class_ID',
+    },
+    {
+        $Type: 'UI.DataField',
+        Value: Subject.ID,
+        Label: 'ID',
+    },
+]);
+
+annotate service.Assignment with {
+    Subject @Common.Text: {
+        $value                : Subject.title,
+        ![@UI.TextArrangement]: #TextOnly,
+    }
+};
+
+annotate service.Assignment with {
+    Class @Common.Text: {
+        $value                : Class.title,
+        ![@UI.TextArrangement]: #TextOnly,
+    }
+};
+
+annotate service.Class with @(UI.PresentationVariant #vh_Assignment_Class: {
+    $Type    : 'UI.PresentationVariantType',
+    SortOrder: [{
+        $Type     : 'Common.SortOrderType',
+        Property  : title,
+        Descending: false,
+    }, ],
+});
+
+annotate service.Assignment with {
+    Class @Common.ValueListWithFixedValues: true
+};
+
+annotate service.Class with {
+    ID @Common.Text: {
+        $value                : title,
+        ![@UI.TextArrangement]: #TextOnly,
+    }
+};
+
+annotate service.Assignment with {
+    Subject @Common.ValueListWithFixedValues: true
+};
+
+annotate service.Subject with {
+    ID @Common.Text: {
+        $value                : title,
+        ![@UI.TextArrangement]: #TextOnly,
+    }
+};
+annotate service.Class with {
+    title @Common.Label : 'Class'
+};
+
+annotate service.Assignment with {
+    Class @Common.Label : 'Class'
+};
