@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cds = require('@sap/cds');
 module.exports = cds.service.impl(function () {
     return __awaiter(this, void 0, void 0, function* () {
+        // Get Assignment
+        const { Assignment } = this.entities;
         // Validating beginning and ending time (8 - 12:15 and beginning before ending)
-        this.before('SAVE', 'Assignment', (req) => {
+        this.before('SAVE', 'Assignment', (req) => __awaiter(this, void 0, void 0, function* () {
             const { Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
             if (!Beginning)
                 req.error(400, "Enter a begin time", "in/Beginning");
@@ -60,37 +62,13 @@ module.exports = cds.service.impl(function () {
             //**********************************************
             //       Already Assignments on this day?
             //**********************************************
-            // TODO It is counting but this.before('SAVE') is not waiting. asyc in front of (req: ...) does not work
-            // Check if already assignment today
-            const baseUrl = 'http://localhost:4004/odata/v4/service/Assignment';
-            const entitySet = 'Assignment';
-            const classIdFilter = `Class_ID eq ${Class_ID}`;
-            const dayFilter = `Day eq ${Day}`;
-            // Baue die OData-Abfrage-URL
-            const odataQueryUrl = `${baseUrl}/${entitySet}?$filter=${classIdFilter} and ${dayFilter}&$count=true`;
-            // Sende die Anfrage mit Fetch
-            /* fetch(odataQueryUrl)
-                .then(response =>
-                {
-                    if (!response.ok)
-                    {
-                        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data =>
-                {
-                    // Datenverarbeitung hier
-                    const numberOfAssignments = data['@odata.count'];
-                    console.log(`Anzahl der Datensätze: ${numberOfAssignments}`);
-    
-                    if (numberOfAssignments > 1) req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
-                })
-                .catch(error =>
-                {
-                    console.error('Fehler beim Abrufen der Daten:', error);
-                }
-                ); */
-        });
+            // Count assignment of a class on a day
+            const result = yield this
+                .read(Assignment)
+                .where({ 'Class_ID': Class_ID, 'Day': Day });
+            const numberOfAssociationsWithClass = result.length;
+            if (numberOfAssociationsWithClass > 0)
+                req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
+        }));
     });
 });

@@ -31,6 +31,14 @@
   "cds": {
     "fiori": {
       "bypass_draft": true
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
     }
   }
 }
