@@ -8,6 +8,8 @@
   "dependencies": {
     "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.19",
     "@sap/cds": "^7.5.3",
+    "@sap/cds-hana": "^2",
+    "@sap/cds-mtxs": "^1.9",
     "@ui5/cli": "^3.9.0",
     "express": "^4",
     "ts-node": "^10.9.2",
@@ -15,8 +17,12 @@
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
     "cds-plugin-ui5": "^0.6.13",
     "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": "^21"
   },
   "scripts": {
     "start": "cds-serve",
@@ -38,7 +44,12 @@
         "credentials": {
           "url": "db.sqlite"
         }
-      }
-    }
+      },
+      "[production]": {
+        "db": "hana"
+      },
+      "multitenancy": true
+    },
+    "profile": "with-mtx-sidecar"
   }
 }

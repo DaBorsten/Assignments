@@ -90,30 +90,23 @@ annotate service.Assignment with @(
                 $Type: 'UI.DataField',
                 Label: 'Topic',
                 Value: Topic,
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: Day,
-                Label: 'Day',
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Beginning',
-                Value: Beginning,
-            },
-            {
-                $Type: 'UI.DataField',
-                Label: 'Ending',
-                Value: Ending,
             }
         ],
     },
-    UI.Facets                     : [{
-        $Type : 'UI.ReferenceFacet',
-        ID    : 'GeneratedFacet1',
-        Label : 'General Information',
-        Target: '@UI.FieldGroup#GeneratedGroup1',
-    }, ]
+    UI.Facets                     : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'GeneratedFacet1',
+            Label : 'Assignment Information',
+            Target: '@UI.FieldGroup#GeneratedGroup1',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Time Information',
+            ID    : 'TimeInformation',
+            Target: '@UI.FieldGroup#TimeInformation',
+        },
+    ]
 );
 
 annotate service.Assignment with @(UI.SelectionFields: []);
@@ -162,6 +155,7 @@ annotate service.Assignment with @(UI.SelectionPresentationVariant #table1: {
         $Type        : 'UI.SelectionVariantType',
         SelectOptions: [],
     },
+    Text : 'Assignments',
 });
 
 annotate service.Class with {
@@ -285,9 +279,90 @@ annotate service.Assignment with {
 annotate service.Assignment with {
     Ending @Common.FieldControl: #Mandatory
 };
+
 annotate service.Assignment with {
-    Class @Common.FieldControl : #Mandatory
+    Class @Common.FieldControl: #Mandatory
 };
+
 annotate service.Assignment with {
-    Subject @Common.FieldControl : #Mandatory
+    Subject @Common.FieldControl: #Mandatory
 };
+
+annotate service.Assignment with @(UI.FieldGroup #TimeInformation: {
+    $Type: 'UI.FieldGroupType',
+    Data : [
+        {
+            $Type: 'UI.DataField',
+            Value: Day,
+            Label: 'Day',
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Beginning',
+            Value: Beginning,
+        },
+        {
+            $Type: 'UI.DataField',
+            Label: 'Ending',
+            Value: Ending,
+        },
+    ],
+});
+
+annotate service.Assignment with @(UI.HeaderInfo: {
+    Title         : {
+        $Type: 'UI.DataField',
+        Value: Topic,
+    },
+    TypeName      : '',
+    TypeNamePlural: '',
+    Description   : {
+        $Type: 'UI.DataField',
+        Value: Day,
+    },
+});
+annotate service.Class with @(
+    UI.LineItem #tableView : [
+        {
+            $Type : 'UI.DataField',
+            Value : assignments.Class.title,
+        },],
+    UI.SelectionPresentationVariant #tableView : {
+        $Type : 'UI.SelectionPresentationVariantType',
+        PresentationVariant : {
+            $Type : 'UI.PresentationVariantType',
+            Visualizations : [
+                '@UI.LineItem#tableView',
+            ],
+        },
+        SelectionVariant : {
+            $Type : 'UI.SelectionVariantType',
+            SelectOptions : [
+            ],
+        },
+        Text : 'Classes',
+    }
+);
+annotate service.Subject with @(
+    UI.LineItem #tableView : [
+        {
+            $Type : 'UI.DataField',
+            Value : assignments.Subject.title,
+            Label : 'title',
+        },],
+    UI.SelectionPresentationVariant #tableView : {
+        $Type : 'UI.SelectionPresentationVariantType',
+        PresentationVariant : {
+            $Type : 'UI.PresentationVariantType',
+            Visualizations : [
+                '@UI.LineItem#tableView',
+            ],
+        },
+        SelectionVariant : {
+            $Type : 'UI.SelectionVariantType',
+            SelectOptions : [
+            ],
+        },
+        Text : 'Subjects',
+    }
+);

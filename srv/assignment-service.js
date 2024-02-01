@@ -17,12 +17,6 @@ module.exports = cds.service.impl(function () {
         // Validating beginning and ending time (8 - 12:15 and beginning before ending)
         this.before('SAVE', 'Assignment', (req) => __awaiter(this, void 0, void 0, function* () {
             const { ID, Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
-            if (!Beginning)
-                req.error(400, "Enter a begin time", "in/Beginning");
-            if (!Ending)
-                req.error(400, "Enter an end time", "in/Ending");
-            if (!Day)
-                req.error(400, "Enter a day", "in/Day");
             //**********************************************
             //              Time Validation
             //**********************************************
@@ -40,8 +34,6 @@ module.exports = cds.service.impl(function () {
             // If Day == today, then check beginning time
             if ((Day == today) && (Date.parse(Day + "T" + Beginning) < Date.parse(new Date().toISOString()))) {
                 let now = new Date();
-                console.log(`Aktuell: ${Date.parse(new Date().toISOString())}`);
-                console.log(`12:15: ${Date.parse(Day + "T12:15:00")}`);
                 if (Date.parse(new Date().toISOString()) >= Date.parse(Day + "T12:15:00")) {
                     req.error(400, `No assignments for today.`, 'in/Day');
                 }
