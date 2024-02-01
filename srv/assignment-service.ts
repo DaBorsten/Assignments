@@ -10,10 +10,14 @@ module.exports = cds.service.impl(async function (this: any)
 
     // Validating beginning and ending time (8 - 12:15 and beginning before ending)
 
-    this.before('SAVE', 'Assignment', async (req: { data: { Class_ID: any; Day: any; Beginning: any; Ending: any; }; error: (arg0: number, arg1: string, arg2: string) => void; }) =>
+    this.before('SAVE', 'Assignment', async (req: {
+        data: {
+            ID: any; Class_ID: any; Day: any; Beginning: any; Ending: any;
+        }; error: (arg0: number, arg1: string, arg2: string) => void;
+    }) =>
     {
 
-        const { Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
+        const { ID, Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
 
         if (!Beginning) req.error(400, "Enter a begin time", "in/Beginning");
         if (!Ending) req.error(400, "Enter an end time", "in/Ending");
@@ -81,7 +85,26 @@ module.exports = cds.service.impl(async function (this: any)
 
         const numberOfAssociationsWithClass = result.length;
 
-        if (numberOfAssociationsWithClass > 0) req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
+        // If there is at least 1 assignment check if its the current one (updating)
+        if (numberOfAssociationsWithClass > 0)
+        {
+
+            let existing = false;
+
+            for (let i = 0; i < numberOfAssociationsWithClass; i++)
+            {
+                if (result[i].ID == req.data.ID)
+                {
+                    existing = true;
+                }
+            }
+
+            if (existing == false)
+            {
+                req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
+            }
+
+        }
 
     });
 

@@ -16,7 +16,7 @@ module.exports = cds.service.impl(function () {
         const { Assignment } = this.entities;
         // Validating beginning and ending time (8 - 12:15 and beginning before ending)
         this.before('SAVE', 'Assignment', (req) => __awaiter(this, void 0, void 0, function* () {
-            const { Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
+            const { ID, Class_ID, Day, Beginning, Ending } = req.data, today = (new Date()).toISOString().slice(0, 10);
             if (!Beginning)
                 req.error(400, "Enter a begin time", "in/Beginning");
             if (!Ending)
@@ -67,8 +67,18 @@ module.exports = cds.service.impl(function () {
                 .read(Assignment)
                 .where({ 'Class_ID': Class_ID, 'Day': Day });
             const numberOfAssociationsWithClass = result.length;
-            if (numberOfAssociationsWithClass > 0)
-                req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
+            // If there is at least 1 assignment check if its the current one (updating)
+            if (numberOfAssociationsWithClass > 0) {
+                let existing = false;
+                for (let i = 0; i < numberOfAssociationsWithClass; i++) {
+                    if (result[i].ID == req.data.ID) {
+                        existing = true;
+                    }
+                }
+                if (existing == false) {
+                    req.error(400, `There is already an assignment this day ${Day}.`, 'in/Day');
+                }
+            }
         }));
     });
 });
